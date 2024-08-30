@@ -23,6 +23,6 @@ dev = [
 requires = ["setuptools >= 62", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.pakages.find]
+[tool.setuptools.packages.find]
 where = "src"
 
