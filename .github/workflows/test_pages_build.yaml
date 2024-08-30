@@ -18,24 +18,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python 3
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
-
-      - name: Install Poetry
-        run: pipx install poetry
+      - name: Install cached uv
+        uses: hynek/setup-cached-uv@v2
 
       - name: Install dependencies
-        run: poetry install -E docs
-
-      - name: Build documentation
         run: |
-          mkdir -p site
-          touch site/.nojekyll
+          uv venv
+          uv pip install '.[dev]'
+
+      - name: Build documentation.
+        run: |
+          source .venv/bin/activate
+          mkdir -p docs
+          touch docs/.nojekyll
           make gendoc
           ([ ! -f docs/about.md ] && cp src/docs/about.md docs/) || true
-          poetry run mkdocs build -d site
+          make mkd-gh-deploy
+          mkdocs build -d site
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1

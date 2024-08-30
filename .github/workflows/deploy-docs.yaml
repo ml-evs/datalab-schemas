@@ -20,19 +20,17 @@ jobs:
         with:
           fetch-depth: 0  # otherwise, you will failed to push refs to dest repo
 
-      - name: Set up Python.
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
+      - name: Install cached uv
+        uses: hynek/setup-cached-uv@v2
 
-      - name: Install Poetry.
-        run: pipx install poetry
-
-      - name: Install dependencies.
-        run: poetry install -E docs
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install '.[dev]'
 
       - name: Build documentation.
         run: |
+          source .venv/bin/activate
           mkdir -p docs
           touch docs/.nojekyll
           make gendoc

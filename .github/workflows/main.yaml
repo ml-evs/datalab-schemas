@@ -16,21 +16,15 @@ jobs:
     steps:
 
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install Poetry
-        run: pipx install poetry
+      - name: Install cached uv
+        uses: hynek/setup-cached-uv@v2
 
       - name: Install dependencies
-        run: poetry install --no-interaction --no-root
-
-      - name: Install project
-        run: poetry install --no-interaction
+        run: |
+          uv venv
+          uv pip install '.[dev]'
 
       - name: Run test suite
         run: make test
