@@ -1,0 +1,24 @@
+[project]
+name = "datalab_schema"
+description = "Core schemas for datalab."
+authors = [{ name = "datalab development team", email = "dev@datalab-org.io"}]
+license = { text = "MIT" }
+dynamic = ["version"]
+readme = "README.md"
+
+requires-python = ">=3.10"
+
+dependencies = [
+    "linkml-runtime ~= 1.8"
+]
+
+[project.optional-dependencies]
+dev = [
+    "linkml ~= 1.8",
+    "mkdocs-material ~= 8.2",
+    "mkdocs-mermaid2-plugin ~= 1.1",
+]
+
+[build-system]
+requires = ["setuptools >= 62", "wheel"]
+build-backend = "setuptools.build_meta"
